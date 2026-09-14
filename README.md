@@ -2,6 +2,8 @@
 
 合上 MacBook 屏幕时，让桌面随开合角度逐渐变形、模糊。
 
+![Mac Duo 桌面透视与渐进模糊效果](images/desktop-effect.png)
+
 **[下载 Mac Duo · Apple Silicon 测试版](https://github.com/xzchahaha-ctrl/mac-duo/releases/download/v0.1.0-beta.3/Mac-Duo-0.1.0-beta.3-arm64.zip)** · [版本说明](https://github.com/xzchahaha-ctrl/mac-duo/releases/tag/v0.1.0-beta.3)
 
 ## 使用条件
