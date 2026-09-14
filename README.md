@@ -2,7 +2,7 @@
 
 合上 MacBook 屏幕时，让桌面随开合角度逐渐变形、模糊。
 
-**[下载 Mac Duo · Apple Silicon 测试版](https://github.com/xzchahaha-ctrl/mac-duo/releases/download/v0.1.0-beta.1/Mac-Duo-0.1.0-beta.1-arm64.zip)** · [版本说明](https://github.com/xzchahaha-ctrl/mac-duo/releases/tag/v0.1.0-beta.1)
+**[下载 Mac Duo · Apple Silicon 测试版](https://github.com/xzchahaha-ctrl/mac-duo/releases/download/v0.1.0-beta.2/Mac-Duo-0.1.0-beta.2-arm64.zip)** · [版本说明](https://github.com/xzchahaha-ctrl/mac-duo/releases/tag/v0.1.0-beta.2)
 
 ## 使用条件
 
@@ -24,7 +24,7 @@
 
 - 根据实际开合角度，让桌面缩小、透视变形，并从顶部向下逐渐模糊。
 - 上下开合都连续跟随；停止开合 1.8 秒后平滑恢复清晰。
-- 实时调整触发角度（60°–130°，初始 90°）和滑感。
+- 调整触发角度（60°–130°，初始 90°）时，拖动期间桌面保持清晰，松开鼠标后按最终值生效；滑感仍可实时调整。
 - 在“效果预览”中拖动滑杆体验效果，不改变真实屏幕角度。
 - 在菜单栏面板开启或关闭效果，或退出 App。
 - QQ、微信联系方式支持只复制号码，点击号码显示对应二维码。
