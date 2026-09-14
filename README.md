@@ -1,7 +1,6 @@
 # Mac Duo
 
-> **仅限 macOS 15.7.7 · Apple 芯片 MacBook**
-> 其他系统版本暂不支持，请勿下载安装。
+![仅限 macOS 15.7.7 · Apple 芯片 MacBook；其他系统版本暂不支持，请勿下载安装。](images/system-requirement.svg)
 
 ![Mac Duo](images/mac-duo-cover-v2.png)
 
