@@ -1,5 +1,7 @@
 # Mac Duo
 
+![Mac Duo](images/mac-duo-cover.png)
+
 合上 MacBook 屏幕时，让桌面随开合角度逐渐变形、模糊。
 
 ![Mac Duo 桌面透视与渐进模糊效果](images/desktop-effect.png)
