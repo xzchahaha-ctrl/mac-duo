@@ -8,7 +8,7 @@
 
 ![Mac Duo 桌面透视与渐进模糊效果](images/desktop-effect.png)
 
-**[下载 Mac Duo · Apple Silicon 测试版](https://github.com/xzchahaha-ctrl/mac-duo/releases/download/v0.1.0-beta.3/Mac-Duo-0.1.0-beta.3-arm64.zip)** · [版本说明](https://github.com/xzchahaha-ctrl/mac-duo/releases/tag/v0.1.0-beta.3)
+**[下载 Mac Duo · Apple Silicon 测试版](https://github.com/xzchahaha-ctrl/mac-duo/releases/download/v0.1.0-beta.4/Mac.Duo.zip)** · [版本说明](https://github.com/xzchahaha-ctrl/mac-duo/releases/tag/v0.1.0-beta.4)
 
 ## 使用条件
 
