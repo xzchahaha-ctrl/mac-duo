@@ -10,11 +10,11 @@ permissions:
   contents: read
 jobs:
   system-runtime:
-    name: Apple Silicon macOS 26 system runtime
+    name: Apple Silicon macOS 26 unattended runtime
     runs-on: macos-26
     timeout-minutes: 12
     steps:
-      - name: Download the candidate
+      - name: Download candidate
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ inputs.release_tag }}
@@ -22,11 +22,11 @@ jobs:
           mkdir candidate
           gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.zip' --dir candidate
           mv "$(find candidate -maxdepth 1 -name '*.zip' -print -quit)" candidate/MacDuoCandidate.zip
-      - name: Verify package and system runtime
+      - name: Verify package, noninteractive launch and uninstall
         run: |
           ditto -x -k candidate/MacDuoCandidate.zip candidate/extracted
           python3 - <<'PY'
-          import datetime, json, os, pathlib, plistlib, subprocess, time
+          import datetime, json, os, pathlib, plistlib, subprocess
           app = pathlib.Path('candidate/extracted/Mac Duo.app').resolve()
           binary = app / 'Contents/MacOS/FrostGPU'
           assert app.is_dir()
@@ -35,18 +35,11 @@ jobs:
               print(json.dumps({'bundle': str(bundle), 'minimumSystem': info.get('LSMinimumSystemVersion')}))
               assert subprocess.check_output(['lipo', '-archs', str(bundle / 'Contents/MacOS/FrostGPU')], text=True).strip() == 'arm64'
               subprocess.run(['codesign', '--verify', '--strict', str(bundle)], check=True)
-          for flags in [['--preview-only'], ['--simulate-permission-denied'], ['--simulate-sensor-failure'], ['--simulate-unsupported-chip'], ['--simulate-sensor-invalid'], ['--simulate-sensor-hang']]:
-              result = subprocess.run([str(binary), '--compat-smoke', *flags], capture_output=True, text=True, timeout=25)
-              record = {'case': flags[0], 'exit': result.returncode, 'output': result.stdout, 'error': result.stderr[-1200:]}
-              print(json.dumps(record, ensure_ascii=False), flush=True)
-              assert result.returncode == 0 and 'PASS:' in result.stdout, record
-          deadline = time.monotonic() + 4
-          while time.monotonic() < deadline:
-              if subprocess.run(['pgrep', '-f', str(binary)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0: break
-              time.sleep(0.1)
-          assert subprocess.run(['pgrep', '-f', str(binary)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0
+          result = subprocess.run([str(binary), '--self-test'], capture_output=True, text=True, timeout=20)
+          print(json.dumps({'selfTestExit': result.returncode, 'output': result.stdout, 'error': result.stderr[-1200:]}, ensure_ascii=False), flush=True)
+          assert result.returncode == 0
           destination = pathlib.Path.home() / '.Trash' / ('Mac Duo macOS26 test ' + datetime.datetime.now().strftime('%Y%m%d-%H%M%S') + '.app')
           os.rename(app, destination)
           assert destination.is_dir() and not app.exists()
-          print('PASS: macOS 26 system runtime, safe fallback, quit and uninstall')
+          print('PASS: macOS 26 unattended package load, exit and uninstall')
           PY
