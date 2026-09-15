@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: Draft release tag containing Mac Duo.zip
+        description: Release tag containing the Mac Duo candidate ZIP
         required: true
         type: string
 
@@ -17,17 +17,19 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 12
     steps:
-      - name: Download the unpublished candidate
+      - name: Download the candidate
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ inputs.release_tag }}
         run: |
           mkdir candidate
-          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern 'Mac.Duo.zip' --dir candidate
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.zip' --dir candidate
+          test "$(find candidate -maxdepth 1 -name '*.zip' -print -quit)"
+          mv "$(find candidate -maxdepth 1 -name '*.zip' -print -quit)" candidate/MacDuoCandidate.zip
 
       - name: Extract and verify package declarations
         run: |
-          ditto -x -k 'candidate/Mac.Duo.zip' candidate/extracted
+          ditto -x -k 'candidate/MacDuoCandidate.zip' candidate/extracted
           app='candidate/extracted/Mac Duo.app'
           test -d "$app"
           test "$(plutil -extract LSMinimumSystemVersion raw "$app/Contents/Info.plist")" = '15.0'
@@ -46,14 +48,7 @@ jobs:
               assert info['LSMinimumSystemVersion'] == '15.0'
               assert subprocess.check_output(['lipo', '-archs', str(bundle / 'Contents/MacOS/FrostGPU')], text=True).strip() == 'arm64'
               subprocess.run(['codesign', '--verify', '--strict', str(bundle)], check=True)
-          cases = [
-              ['--preview-only'],
-              ['--simulate-permission-denied'],
-              ['--simulate-sensor-failure'],
-              ['--simulate-unsupported-chip'],
-              ['--simulate-sensor-invalid'],
-              ['--simulate-sensor-hang'],
-          ]
+          cases = [['--preview-only'], ['--simulate-permission-denied'], ['--simulate-sensor-failure'], ['--simulate-unsupported-chip'], ['--simulate-sensor-invalid'], ['--simulate-sensor-hang']]
           for flags in cases:
               result = subprocess.run([str(binary), '--compat-smoke', *flags], capture_output=True, text=True, timeout=25)
               record = {'case': flags[0], 'exit': result.returncode, 'output': result.stdout, 'error': result.stderr[-1200:]}
