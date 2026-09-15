@@ -1,6 +1,6 @@
 # Mac Duo
 
-![仅限 macOS 15.7.7 · Apple 芯片 MacBook；其他系统版本暂不支持，请勿下载安装。](images/system-requirement.svg)
+![当前 beta.4：macOS 15.0 或更高版本 · Apple Silicon MacBook。效果目标为 M3、M4、M5；macOS 26 仅完成无界面验证。](images/system-requirement.svg)
 
 ![Mac Duo](images/mac-duo-cover-v2.png)
 
@@ -12,9 +12,9 @@
 
 ## 使用条件
 
-- Apple Silicon MacBook，并且能读取内置开合角度传感器。不是所有苹果芯片电脑都保证支持；台式 Mac 和 Intel Mac 不在支持范围内。
-- 仅限 macOS 15.7.7；其他系统版本暂不支持。
-- 当前仅在 M4 Pro / macOS 15.7.7 上验证过，其他机型尚未验证。
+- 当前效果支持目标为 M3、M4、M5 系列 MacBook Air / Pro；能否读取内置开合角度仍须在具体机型实测。M1、M2 与 Intel 不在支持范围内。
+- 当前 beta.4 的最低系统为 macOS 15.0，可安装于更高的正式 macOS 版本。
+- M4 Pro / macOS 15.7.7 已完成完整本机测试；macOS 26.6.2 仅完成云端无界面加载、退出与测试副本移除，尚未完成真实桌面交互或铰链验证。
 - 真实桌面效果需要 macOS 的屏幕录制权限。不录制音频。
 
 ## 安装与使用
